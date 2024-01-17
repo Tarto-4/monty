@@ -3,9 +3,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define STACK_SIZE 100
+#include <string.h>
 
-void push(int value, int line_number);
-void pall();
+#define STACK_SIZE 1000
 
-#endif
+typedef struct {
+    int array[STACK_SIZE];
+    int top;
+} Stack;
+
+void initializeStack(Stack *stack);
+int isEmpty(Stack *stack);
+int isFull(Stack *stack);
+void push(Stack *stack, int value);
+void pall(Stack *stack);
+
+#endif /* MONTY_H */
