@@ -1,4 +1,5 @@
 #include "monty.h"
+
 /**
  * Initialize a stack.
  */
@@ -23,9 +24,9 @@ int isFull(Stack *stack) {
 /**
  * Push an element onto the stack.
  */
-void push(Stack *stack, int value) {
+void push(Stack *stack, int value, int line_number) {
     if (isFull(stack)) {
-        fprintf(stderr, "Error: stack overflow\n");
+        fprintf(stderr, "L%d: Error: stack overflow\n", line_number);
         exit(EXIT_FAILURE);
     }
     stack->array[++stack->top] = value;
@@ -43,7 +44,7 @@ void pall(Stack *stack) {
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        fprintf(stderr, "USAGE: monty file\n");
+        fprintf(stderr, "USAGE: %s file\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -58,20 +59,23 @@ int main(int argc, char *argv[]) {
 
     char opcode[10];
     int value;
+    int line_number = 1;
 
     while (fscanf(file, "%s", opcode) != EOF) {
         if (strcmp(opcode, "push") == 0) {
             if (fscanf(file, "%d", &value) != 1) {
-                fprintf(stderr, "Error: usage: push integer\n");
+                fprintf(stderr, "L%d: Error: usage: push integer\n", line_number);
                 exit(EXIT_FAILURE);
             }
-            push(&stack, value);
+            push(&stack, value, line_number);
         } else if (strcmp(opcode, "pall") == 0) {
             pall(&stack);
         } else {
-            fprintf(stderr, "Error: unknown instruction %s\n", opcode);
+            fprintf(stderr, "L%d: Error: unknown instruction %s\n", line_number, opcode);
             exit(EXIT_FAILURE);
         }
+
+        line_number++;
     }
 
     fclose(file);
