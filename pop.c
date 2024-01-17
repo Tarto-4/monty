@@ -24,13 +24,4 @@ void pall() {
     }
 }
 
-/*int main() {
-    // Example usage:
-    push(5, 1);
-    push(10, 2);
-    push(15, 3);
-    
-    pall();
-    
-    return 0;
-}*/
+return 0;
